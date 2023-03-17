@@ -296,7 +296,7 @@ contract automobileContract {
         carInfoMapping[_vin].color = _color;
         carInfoMapping[_vin].motor = _motor;
         carInfoMapping[_vin].createDate = block.timestamp;
-
+        Signer(_vin);
         emit carInfoCreated(_companyId,_typeFuel,_carModel,_kind, _style, _chassisNumber,_vin, _color, _motor);
         
         return "successfully.";
@@ -419,8 +419,9 @@ contract automobileContract {
         thirdInsuranceInfoMapping[_thirdInsuranceId].startDate = _startDate;
         thirdInsuranceInfoMapping[_thirdInsuranceId].endDate = _endDate;
         thirdInsuranceInfoMapping[_thirdInsuranceId].numberInsurance = _numberInsurance;
-
-         return _thirdInsuranceId; 
+        Signer(_thirdInsuranceId);
+        
+        return _thirdInsuranceId; 
 
     }
 
@@ -437,8 +438,8 @@ contract automobileContract {
         bodyInsuranceInfoMapping[_bodyInsuranceId].otherEquipment = _otherEquipment;
         bodyInsuranceInfoMapping[_bodyInsuranceId].startDate = _startDate;
         bodyInsuranceInfoMapping[_bodyInsuranceId].endDate = _endDate;
-
-         return _bodyInsuranceId; 
+        Signer(_bodyInsuranceId);
+        return _bodyInsuranceId; 
 
     }
 
@@ -453,6 +454,7 @@ contract automobileContract {
         insuranceUseMapping[_insuranceUseId].price = _price;
         insuranceUseMapping[_insuranceUseId].driver = _driver;
         insuranceUseMapping[_insuranceUseId].dateUse = block.timestamp;
+        Signer(_insuranceUseId);
 
          return _insuranceUseId; 
     }
@@ -505,7 +507,7 @@ contract automobileContract {
         smoothingPaintInfoMapping[_carVinId].spaceSmoothing = _spaceSmoothing;
         smoothingPaintInfoMapping[_carVinId].kilometer = _kilometer;
         smoothingPaintInfoMapping[_carVinId].description = _description;
-
+        Signer(_carVinId);
         return "Successfully."; 
 
     }
@@ -521,7 +523,7 @@ contract automobileContract {
         warrantyInfoMapping[_carVinId].startDate = _startDate;
         warrantyInfoMapping[_carVinId].endDate = _endDate;
         warrantyInfoMapping[_carVinId].maxKilometer = _maxKilometer;
-
+        Signer(_carVinId);
 
         return "Successfully."; 
 
@@ -544,7 +546,7 @@ contract automobileContract {
         repairsInfoMapping[_carVinId].namePiece = _namePiece;
         repairsInfoMapping[_carVinId].reasonReplacePiece = _reasonReplacePiece;
         repairsInfoMapping[_carVinId].description = _description;
-
+        Signer(_carVinId);
         return "successfully."; 
 
     }
@@ -578,5 +580,11 @@ contract automobileContract {
         return (repairsInfoMapping[_carVinId].warrantyId,repairsInfoMapping[_carVinId].companyId,repairsInfoMapping[_carVinId].carVinId,
                repairsInfoMapping[_carVinId].serviceDate,repairsInfoMapping[_carVinId].reasonReferral,repairsInfoMapping[_carVinId].diagnosis,
                repairsInfoMapping[_carVinId].namePiece);
+    }
+
+    function Signer(uint _Id) public  returns (string memory){
+        uint val = addresstoId[msg.sender];
+        adminInfoMapping[val].signRecords.push(_Id);
+        return "Success";
     }
 }
